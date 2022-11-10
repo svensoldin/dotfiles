@@ -1,0 +1,35 @@
+# # Load version control information
+# autoload -Uz vcs_info
+# precmd() {
+#     vcs_info
+#     echo 'This has been executed'
+# }
+
+# # Format the vcs_info_msg_0_ variable
+# zstyle ':vcs_info:git:*' formats 'on branch %b'
+
+# setopt PROMPT_SUBST
+# PROMPT='%B%F{cyan}%~%f%F{yellow} ${vcs_info_msg_O_} > '
+
+alias gadd="git add ."
+alias gcm="git commit -m"
+alias gplr="git pull --rebase"
+alias gs="git switch"
+alias gsc="git switch -c"
+
+function parse_git_branch() {
+    git branch 2> /dev/null | sed -n -e 's/^\* \(.*\)/[\1]/p'
+}
+
+COLOR_DEF=$'\e[0m'
+COLOR_USR=$'\e[38;5;243m'
+COLOR_DIR=$'\e[38;5;197m'
+COLOR_GIT=$'\e[38;5;39m'
+setopt PROMPT_SUBST
+export PROMPT='%B%F{cyan}%~ %F{yellow}$(parse_git_branch) > '
+
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
